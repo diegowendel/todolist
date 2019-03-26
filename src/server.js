@@ -1,7 +1,7 @@
-const app = require('./config/express')();
-const config = require('./config/config')();
-const logger = require('./app/utils/logger');
-require('./config/database')(config.MONGODB_URI);
+const app = require('./config/Express')();
+const config = require('./config/Config')();
+const logger = require('./app/utils/Logger');
+require('./config/Database')(config.MONGODB_URI);
 
 // Initialize the app
 app.listen(config.PORT, () => {

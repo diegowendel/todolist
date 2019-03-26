@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const logger = require('../app/utils/logger');
+const logger = require('../app/utils/Logger');
 
 module.exports = (uri) => {
   // Mongoose database
