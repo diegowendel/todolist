@@ -1,0 +1,19 @@
+{
+  "name": "todolist",
+  "version": "1.0.0",
+  "description": "Todolist Test Application for GERDAU",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": "https://github.com/diegowendel/todolist",
+  "author": "diegowendel",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "express-load": "^1.1.16",
+    "helmet": "^3.16.0",
+    "mongoose": "^5.4.20"
+  }
+}
