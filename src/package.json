@@ -10,10 +10,12 @@
   "author": "diegowendel",
   "license": "MIT",
   "dependencies": {
+    "bluebird": "^3.5.3",
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "express-load": "^1.1.16",
     "helmet": "^3.16.0",
+    "moment": "^2.24.0",
     "mongoose": "^5.4.20"
   }
 }

@@ -1,5 +1,5 @@
 module.exports = (app) => {
-  const {Task} = app.controllers;
+  const { Task } = app.controllers;
   app.get('/tarefa', Task.findAll);
   app.get('/tarefa/:id', Task.find);
   app.post('/tarefa', Task.insert);

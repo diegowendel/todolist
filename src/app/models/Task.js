@@ -5,9 +5,10 @@ module.exports = () => {
   const taskSchema = schema({
     nome: String,
     tipo: String,
-    periodo: Date,
+    dataCriacao: { type: Date, default: Date.now },
+    data: Date,
     status: String
   });
 
-  return mongoose.model('Task', taskSchema, 'tasks');
+  return mongoose.model('Task', taskSchema);
 };
