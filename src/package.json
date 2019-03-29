@@ -4,18 +4,22 @@
   "description": "Todolist Test Application for GERDAU",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "mocha app/test"
   },
   "repository": "https://github.com/diegowendel/todolist",
   "author": "diegowendel",
   "license": "MIT",
   "dependencies": {
     "bluebird": "^3.5.3",
+    "chai": "^4.2.0",
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "express-load": "^1.1.16",
     "helmet": "^3.16.0",
+    "mocha": "^6.0.2",
     "moment": "^2.24.0",
-    "mongoose": "^5.4.20"
+    "mongoose": "^5.4.20",
+    "supertest": "^4.0.2"
   }
 }
