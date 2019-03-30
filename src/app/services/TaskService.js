@@ -5,7 +5,7 @@ const { TaskResponse } = require('../dto/TaskResponse');
 
 const prepareResponse = (task) => {
   response = {};
-  response._id = task._id;
+  response.id = task._id;
   response.nome = task.nome;
   response.tipo = task.tipo;
   response.data = Moment(task.data).format("YYYY-MM-DD HH:mm:ss");
@@ -58,7 +58,7 @@ module.exports = (app) => {
       });
     },
     update(task, callback) {
-      const id = String(task._id);
+      const id = String(task.id);
       Task.findByIdAndUpdate(id, task, {new: true}, (err, task) => {
         if (err) {
           Logger.error(err);

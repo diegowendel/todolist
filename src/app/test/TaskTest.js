@@ -26,7 +26,7 @@ before((done) => {
     .expect('Content-Type', 'application/json; charset=utf-8')
     .expect(HTTP.CREATED)
     .end((err, res) => {
-      task1._id = res.body._id;
+      task1.id = res.body.id;
       task1.dataCriacao = res.body.dataCriacao;
       done();
     });
@@ -40,7 +40,7 @@ describe('POST /tarefa', () => {
       .expect('Content-Type', 'application/json; charset=utf-8')
       .expect(HTTP.CREATED)
       .end((err, res) => {
-        expect(res.body).to.have.property('_id');
+        expect(res.body).to.have.property('id');
         expect(res.body).to.have.property('nome');
         expect(res.body.nome).to.equal('Lavar louça');
         expect(res.body).to.have.property('tipo');
@@ -50,7 +50,7 @@ describe('POST /tarefa', () => {
         expect(res.body).to.have.property('status');
         expect(res.body.status).to.equal('PENDENTE');
         expect(res.body).to.have.property('dataCriacao');
-        task2._id = res.body._id;
+        task2.id = res.body.id;
         task2.dataCriacao = res.body.dataCriacao;
         done();
     });
@@ -70,13 +70,13 @@ describe('GET /tarefa', () => {
   });
 
   it('Buscar tarefa: Retorna status HTTP 200 para busca bem sucedida por uma tarefa', (done) => {
-    api.get(`/tarefa/${task1._id}`)
+    api.get(`/tarefa/${task1.id}`)
       .set('Content-Type', 'application/json')
       .expect('Content-Type', 'application/json; charset=utf-8')
       .expect(HTTP.OK)
       .end((err, res) => {
-        expect(res.body).to.have.property('_id');
-        expect(res.body._id).to.equal(task1._id);
+        expect(res.body).to.have.property('id');
+        expect(res.body.id).to.equal(task1.id);
         expect(res.body).to.have.property('nome');
         expect(res.body.nome).to.equal(task1.nome);
         expect(res.body).to.have.property('tipo');
@@ -109,8 +109,8 @@ describe('PUT /tarefa', () => {
       .expect('Content-Type', 'application/json; charset=utf-8')
       .expect(HTTP.OK)
       .end((err, res) => {
-        expect(res.body).to.have.property('_id');
-        expect(res.body._id).to.equal(task._id);
+        expect(res.body).to.have.property('id');
+        expect(res.body.id).to.equal(task.id);
         expect(res.body).to.have.property('nome');
         expect(res.body.nome).to.equal(task.nome);
         expect(res.body).to.have.property('tipo');
@@ -127,7 +127,7 @@ describe('PUT /tarefa', () => {
 
   it('Editar tarefa: Retorna status HTTP 404 para tarefa não encontrada', (done) => {
     task = {...task2};
-    task._id = fakeId;
+    task.id = fakeId;
     api.put('/tarefa')
       .set('Content-Type', 'application/json')
       .send(task)
@@ -138,7 +138,7 @@ describe('PUT /tarefa', () => {
 
 describe('DELETE /tarefa', () => {
   it('Remover tarefa: Retorna status HTTP 200 para remoção bem sucedida', (done) => {
-    api.delete(`/tarefa/${task2._id}`)
+    api.delete(`/tarefa/${task2.id}`)
       .set('Content-Type', 'application/json')
       .expect('Content-Type', 'application/json; charset=utf-8')
       .expect(HTTP.OK, done);
