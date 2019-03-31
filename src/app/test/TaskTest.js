@@ -69,7 +69,7 @@ describe('GET /tarefa', () => {
     });
   });
 
-  it('Buscar tarefa: Retorna status HTTP 200 para busca bem sucedida por uma tarefa', (done) => {
+  it('Buscar tarefa: Retorna status HTTP 200 para busca bem sucedida por uma tarefa pelo id', (done) => {
     api.get(`/tarefa/${task1.id}`)
       .set('Content-Type', 'application/json')
       .expect('Content-Type', 'application/json; charset=utf-8')
@@ -91,7 +91,7 @@ describe('GET /tarefa', () => {
     });
   });
 
-  it('Buscar tarefa: Retorna status HTTP 404 para tarefa não encontrada', (done) => {
+  it('Buscar tarefa: Retorna status HTTP 404 para tarefa não encontrada pelo id', (done) => {
     api.get(`/tarefa/${fakeId}`)
       .set('Accept', 'application/json')
       .expect('Content-Type', 'application/json; charset=utf-8')

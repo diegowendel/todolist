@@ -19,19 +19,7 @@ module.exports = (app) => {
   const { Task } = app.models;
 
   const TaskService = {
-    findAll(callback) {
-      const query = Task.find({});
-      query.exec((err, tasks) => {
-        if (err) {
-          Logger.error(err);
-          callback(new TaskResponse(HTTP.INTERNAL_SERVER_ERROR,
-            {message: 'Erro ao tentar buscar os registros no banco de dados.'}), null);
-        } else {
-          callback(null, new TaskResponse(HTTP.OK, tasks.map(prepareResponse)));
-        }
-      });
-    },
-    find(id, callback) {
+    findById(id, callback) {
       Task.findById(id, (err, task) => {
         if (err) {
           Logger.error(err);
@@ -41,6 +29,17 @@ module.exports = (app) => {
           const response = task ? new TaskResponse(HTTP.OK, prepareResponse(task)) :
             new TaskResponse(HTTP.NOT_FOUND, {message: "id passado não corresponde a nenhuma tarefa."});
           callback(null, response);
+        }
+      });
+    },
+    find(params, callback) {
+      Task.find({ 'nome': new RegExp(params.nome, 'i')}, (err, tasks) => {
+        if (err) {
+          Logger.error(err);
+          callback(new TaskResponse(HTTP.INTERNAL_SERVER_ERROR,
+            {message: 'Erro ao tentar buscar os registros no banco de dados.'}), null);
+        } else {
+          callback(null, new TaskResponse(HTTP.OK, tasks.map(prepareResponse)));
         }
       });
     },

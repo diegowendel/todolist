@@ -6,12 +6,13 @@ module.exports = (app) => {
   promise.promisifyAll(service);
 
   const TaskController = {
-    findAll(req, res) {
-      service.findAllAsync().then(response => res.status(response.status).json(response.json));
+    findById(req, res) {
+      const id = String(req.params.id);
+      service.findByIdAsync(id).then(response => res.status(response.status).json(response.json));
     },
     find(req, res) {
-      const id = String(req.params.id);
-      service.findAsync(id).then(response => res.status(response.status).json(response.json));
+      const params = req.query;
+      service.findAsync(params).then(response => res.status(response.status).json(response.json));
     },
     insert(req, res) {
       const newTask = req.body;
