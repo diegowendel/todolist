@@ -1,7 +1,7 @@
 import React from 'react';
 import { Badge, ButtonToolbar, Table } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faEdit, faRedo, faTrash } from '@fortawesome/free-solid-svg-icons';
 import ButtonWithTooltip from './ButtonWithTooltip';
 import Moment from 'moment';
 
@@ -22,7 +22,7 @@ const TaskTableArea = (props) => {
               <th>Data</th>
               <th>Data de Criação</th>
               <th>Status</th>
-              <th>Ações</th>
+              <th width="16%">Ações</th>
             </tr>
           </thead>
           <tbody>
@@ -33,12 +33,25 @@ const TaskTableArea = (props) => {
                 <td>{Moment(task.data).format('DD/MM/YYYY')}</td>
                 <td>{Moment(task.dataCriacao).format('DD/MM/YYYY')}</td>
                 <td>
-                  <Badge pill variant={task.status == 'PENDENTE' ? 'warning' : 'success'}>
+                  <Badge pill variant={task.status === 'PENDENTE' ? 'warning' : 'success'}>
                     {task.status}
                   </Badge>
                 </td>
                 <td>
-                  <ButtonToolbar className="text-center">
+                  <ButtonToolbar>
+                    {task.status === 'PENDENTE' ?
+                      <ButtonWithTooltip variant="success"
+                        tooltip="Concluir tarefa"
+                        onClick={() => props.onFinish(task)}>
+                        <FontAwesomeIcon icon={faCheck} />
+                      </ButtonWithTooltip>
+                      :
+                      <ButtonWithTooltip variant="warning"
+                        tooltip="Reabrir tarefa"
+                        onClick={() => props.onReopen(task)}>
+                        <FontAwesomeIcon icon={faRedo} />
+                      </ButtonWithTooltip>
+                    }
                     <ButtonWithTooltip variant="info"
                       tooltip="Editar tarefa">
                       <FontAwesomeIcon icon={faEdit} />

@@ -27,7 +27,9 @@ class App extends Component {
     this.onShowModalCriacao = this.onShowModalCriacao.bind(this);
     this.onShowModalRemocao = this.onShowModalRemocao.bind(this);
     this.onCreateTask = this.onCreateTask.bind(this);
+    this.onFinishTask = this.onFinishTask.bind(this);
     this.onRemoveTask = this.onRemoveTask.bind(this);
+    this.onReopenTask = this.onReopenTask.bind(this);
   }
 
   componentDidMount() {
@@ -95,6 +97,17 @@ class App extends Component {
     });
   }
 
+  onFinishTask(dto) {
+    this.setState({carregando: true});
+    dto.status = 'CONCLUIDA';
+    axios.put('http://localhost:5000/tarefa', dto).then(res => {
+      this.setState({carregando: undefined});
+      this.onSearch();
+    }).catch(err => {
+      this.setState({carregando: undefined});
+    });
+  }
+
   onRemoveTask() {
     this.setState({carregando: true});
     axios.delete(`http://localhost:5000/tarefa/${this.state.taskSelected.id}`).then(res => {
@@ -105,6 +118,17 @@ class App extends Component {
     });
   }
 
+  onReopenTask(dto) {
+    this.setState({carregando: true});
+    dto.status = 'PENDENTE';
+    axios.put('http://localhost:5000/tarefa', dto).then(res => {
+      this.setState({carregando: undefined});
+      this.onSearch();
+    }).catch(err => {
+      this.setState({carregando: undefined});
+    });
+  }
+
   render() {
     return (
       <div className="App painel-filtros">
@@ -112,7 +136,9 @@ class App extends Component {
           onSearch={this.onSearch}
           onCreate={this.onShowModalCriacao}/>
         <TaskTableArea tasks={this.state.tasks}
-          onRemove={this.onShowModalRemocao} />
+          onFinish={this.onFinishTask}
+          onRemove={this.onShowModalRemocao}
+          onReopen={this.onReopenTask} />
 
         {/* Modal de criação */}
         <CreateTaskModal
