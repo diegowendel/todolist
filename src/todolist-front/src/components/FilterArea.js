@@ -1,41 +1,21 @@
 import React from 'react';
 
-import { Button, Form } from 'react-bootstrap';
-import Select from 'react-select';
+import { Form, ButtonToolbar } from 'react-bootstrap';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
-
-const options = [
-  { value: 'PESSOAL', label: 'Pessoal' },
-  { value: 'PROFISSIONAL', label: 'Profissional' }
-];
+import TipoInput from './TipoInput';
+import NomeInput from './NomeInput';
+import ButtonWithTooltip from './ButtonWithTooltip';
 
 const FilterArea = (props) => {
   return(
     <div className="container filter-area">
       <div className="row">
         <div className="col-sm-4">
-          <Form.Group controlId="nome">
-            <Form.Label>Tarefa</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Nome da tarefa"
-              value={props.nome}
-              onChange={props.onChangeNome}
-            />
-          </Form.Group>
+          <NomeInput value={props.nome} onChange={props.onChangeNome}/>
         </div>
         <div className="col-sm-4">
-          <Form.Group controlId="tipo">
-            <Form.Label>Tipo</Form.Label>
-            <Select
-              value={props.tipo}
-              onChange={props.onChangeTipo}
-              options={options}
-              placeholder="Tipo de tarefa"
-              isClearable={true}
-            />
-          </Form.Group>
+          <TipoInput value={props.tipo} onChange={props.onChangeTipo}/>
         </div>
         <div className="col-sm-4">
           <Form.Group controlId="data">
@@ -53,13 +33,20 @@ const FilterArea = (props) => {
           </Form.Group>
         </div>
       </div>
-      <div className="row">
-        <div className="col-sm-1">
-          <Button variant="secondary" onClick={props.onSearch}>
-            Buscar
-          </Button>
-        </div>
-      </div>
+
+      <ButtonToolbar>
+        <ButtonWithTooltip variant="secondary"
+          tooltip="Buscar tarefas"
+          onClick={props.onSearch}>
+          Buscar
+        </ButtonWithTooltip>
+        <ButtonWithTooltip variant="primary"
+          tooltip="Criar nova tarefa"
+          onClick={props.onCreate}>
+          Nova tarefa
+        </ButtonWithTooltip>
+      </ButtonToolbar>
+
     </div>
   );
 };
