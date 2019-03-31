@@ -33,7 +33,14 @@ module.exports = (app) => {
       });
     },
     find(params, callback) {
-      Task.find({ 'nome': new RegExp(params.nome, 'i')}, (err, tasks) => {
+      if (!params.status) {
+        params.status = ['PENDENTE', 'CONCLUIDA'];
+      }
+      Task.find({
+        nome: new RegExp(params.nome, 'i'),
+        tipo: new RegExp(params.tipo, 'i'),
+        status: { $in: params.status}
+        }, (err, tasks) => {
         if (err) {
           Logger.error(err);
           callback(new TaskResponse(HTTP.INTERNAL_SERVER_ERROR,
@@ -46,6 +53,7 @@ module.exports = (app) => {
     insert(newTask, callback) {
       let task = new Task(newTask);
       task.data = Moment(newTask.data).toDate();
+      task.status = 'PENDENTE';
       task.save((err) => {
         if (err) {
           Logger.error(err);

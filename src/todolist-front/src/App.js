@@ -15,19 +15,12 @@ class App extends Component {
 
     this.state = {
       tasks: [],
-      nome: '',
-      tipo: undefined,
-      dataExata: undefined,
-      dataInicio: undefined,
-      dataFim: undefined,
       showModalCriacao: undefined,
       showModalRemocao: undefined,
       taskSelected: undefined,
       carregando: undefined
     };
 
-    this.onChangeNome = this.onChangeNome.bind(this);
-    this.onChangeTipo = this.onChangeTipo.bind(this);
     this.onSearch = this.onSearch.bind(this);
     this.onCloseModalCriacao = this.onCloseModalCriacao.bind(this);
     this.onCloseModalRemocao = this.onCloseModalRemocao.bind(this);
@@ -41,17 +34,24 @@ class App extends Component {
     this.onSearch();
   }
 
-  onChangeNome(event) {
-    this.setState({nome: event.target.value});
-  }
-
-  onChangeTipo(tipo) {
-    this.setState({ tipo });
-  }
-
-  onSearch() {
+  onSearch(dto) {
     this.setState({carregando: true});
-    axios.get(`http://localhost:5000/tarefa?nome=${this.state.nome}`).then(res => {
+
+    let query = 'http://localhost:5000/tarefa';
+    if (dto) {
+      query += `?nome=${dto.nome}`
+      if (dto.tipo) {
+        query += `&tipo=${dto.tipo.value}`
+      }
+      if (dto.statusConcluida) {
+        query += `&status=CONCLUIDA`
+      }
+      if (dto.statusPendente) {
+        query += `&status=PENDENTE`
+      }
+    }
+
+    axios.get(query).then(res => {
       this.setState({
         carregando: undefined,
         tasks: res.data
@@ -85,9 +85,9 @@ class App extends Component {
     });
   }
 
-  onCreateTask(data) {
+  onCreateTask(dto) {
     this.setState({carregando: true});
-    axios.post('http://localhost:5000/tarefa', data).then(res => {
+    axios.post('http://localhost:5000/tarefa', dto).then(res => {
       this.onCloseModalCriacao();
       this.onSearch();
     }).catch(err => {
@@ -109,10 +109,6 @@ class App extends Component {
     return (
       <div className="App painel-filtros">
         <FilterArea
-          nome={this.state.nome}
-          tipo={this.state.tipo}
-          onChangeNome={this.onChangeNome}
-          onChangeTipo={this.onChangeTipo}
           onSearch={this.onSearch}
           onCreate={this.onShowModalCriacao}/>
         <TaskTableArea tasks={this.state.tasks}

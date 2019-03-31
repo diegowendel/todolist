@@ -1,8 +1,14 @@
 import React from 'react';
-import { Table, ButtonToolbar } from 'react-bootstrap';
+import { Badge, ButtonToolbar, Table } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import ButtonWithTooltip from './ButtonWithTooltip';
+import Moment from 'moment';
+
+const TaskType = {
+  'PESSOAL': 'Pessoal',
+  'PROFISSIONAL': 'Profissional'
+}
 
 const TaskTableArea = (props) => {
   return (
@@ -14,21 +20,25 @@ const TaskTableArea = (props) => {
               <th>Nome</th>
               <th>Tipo</th>
               <th>Data</th>
-              <th>Status</th>
               <th>Data de Criação</th>
-              <th></th>
+              <th>Status</th>
+              <th>Ações</th>
             </tr>
           </thead>
           <tbody>
             {props.tasks.map((task, index) =>
               <tr key={index}>
                 <td>{task.nome}</td>
-                <td>{task.tipo}</td>
-                <td>{task.data}</td>
-                <td>{task.status}</td>
-                <td>{task.dataCriacao}</td>
+                <td>{TaskType[task.tipo]}</td>
+                <td>{Moment(task.data).format('DD/MM/YYYY')}</td>
+                <td>{Moment(task.dataCriacao).format('DD/MM/YYYY')}</td>
                 <td>
-                  <ButtonToolbar>
+                  <Badge pill variant={task.status == 'PENDENTE' ? 'warning' : 'success'}>
+                    {task.status}
+                  </Badge>
+                </td>
+                <td>
+                  <ButtonToolbar className="text-center">
                     <ButtonWithTooltip variant="info"
                       tooltip="Editar tarefa">
                       <FontAwesomeIcon icon={faEdit} />

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import NomeInput from './NomeInput';
 import { Button, Modal } from 'react-bootstrap';
 import TipoInput from './TipoInput';
+import DateInput from './DateInput';
 
 class CreateTaskModal extends Component {
 
@@ -13,14 +14,20 @@ class CreateTaskModal extends Component {
       createDTO: {
         nome: undefined,
         tipo: undefined,
-        data: undefined,
-        status: undefined
+        data: undefined
       }
     };
 
+    this.onChangeData = this.onChangeData.bind(this);
     this.onChangeNome = this.onChangeNome.bind(this);
     this.onChangeTipo = this.onChangeTipo.bind(this);
     this.onSave = this.onSave.bind(this);
+  }
+
+  onChangeData(data) {
+    let dto = {...this.state.createDTO};
+    dto.data = data;
+    this.setState({ createDTO: dto });
   }
 
   onChangeNome(event) {
@@ -42,7 +49,6 @@ class CreateTaskModal extends Component {
   }
 
   render() {
-    console.log('createDTO', this.state.createDTO);
     return (
       <Modal show={this.props.show} onHide={this.props.onClose}>
         <Modal.Header closeButton>
@@ -51,6 +57,7 @@ class CreateTaskModal extends Component {
         <Modal.Body>
           <NomeInput value={this.state.createDTO.nome} onChange={this.onChangeNome}/>
           <TipoInput value={this.state.createDTO.tipo} onChange={this.onChangeTipo}/>
+          <DateInput classes="data-fluid" label="Data" placeholder="Data" value={this.state.createDTO.data} onChange={this.onChangeData}/>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={this.props.onClose}>

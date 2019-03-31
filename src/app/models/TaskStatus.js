@@ -1,4 +1,4 @@
 module.exports = {
-  'CONCLUIDO': 'concluido',
+  'CONCLUIDA': 'concluida',
   'PENDENTE': 'pendente'
 };
