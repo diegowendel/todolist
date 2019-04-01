@@ -33,13 +33,11 @@ module.exports = (app) => {
       });
     },
     find(params, callback) {
-      if (!params.status) {
-        params.status = ['PENDENTE', 'CONCLUIDA'];
-      }
       Task.find({
         nome: new RegExp(params.nome, 'i'),
         tipo: new RegExp(params.tipo, 'i'),
-        status: { $in: params.status}
+        status: { $in: params.status || ['PENDENTE', 'CONCLUIDA']},
+        data: { $gte: params.dataInicio || '1970-01-01', $lte: params.dataFim || '2220-01-01' }
         }, (err, tasks) => {
         if (err) {
           Logger.error(err);

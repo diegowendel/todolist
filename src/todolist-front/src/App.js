@@ -8,6 +8,7 @@ import CreateTaskModal from './components/CreateTaskModal';
 import Spinner from './components/Spinner';
 import SimpleModal from './components/SimpleModal';
 import EditTaskModal from './components/EditTaskModal';
+import Moment from 'moment';
 
 class App extends Component {
 
@@ -47,15 +48,21 @@ class App extends Component {
 
     let query = 'http://localhost:5000/tarefa';
     if (dto) {
-      query += `?nome=${dto.nome}`
+      query += `?nome=${dto.nome}`;
       if (dto.tipo) {
-        query += `&tipo=${dto.tipo.value}`
+        query += `&tipo=${dto.tipo.value}`;
       }
       if (dto.statusConcluida) {
-        query += `&status=CONCLUIDA`
+        query += `&status=CONCLUIDA`;
       }
       if (dto.statusPendente) {
-        query += `&status=PENDENTE`
+        query += `&status=PENDENTE`;
+      }
+      if (dto.dataInicio) {
+        query += `&dataInicio=${Moment(dto.dataInicio).startOf('day').format("YYYY-MM-DD HH:mm:ss")}`;
+      }
+      if (dto.dataFim) {
+        query += `&dataFim=${Moment(dto.dataFim).endOf('day').format("YYYY-MM-DD HH:mm:ss")}`;
       }
     }
 
