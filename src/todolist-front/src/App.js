@@ -7,6 +7,7 @@ import TaskTableArea from './components/TaskTableArea';
 import CreateTaskModal from './components/CreateTaskModal';
 import Spinner from './components/Spinner';
 import SimpleModal from './components/SimpleModal';
+import EditTaskModal from './components/EditTaskModal';
 
 class App extends Component {
 
@@ -16,6 +17,7 @@ class App extends Component {
     this.state = {
       tasks: [],
       showModalCriacao: undefined,
+      showModalEdicao: undefined,
       showModalRemocao: undefined,
       taskSelected: undefined,
       carregando: undefined
@@ -23,10 +25,13 @@ class App extends Component {
 
     this.onSearch = this.onSearch.bind(this);
     this.onCloseModalCriacao = this.onCloseModalCriacao.bind(this);
+    this.onCloseModalEdicao = this.onCloseModalEdicao.bind(this);
     this.onCloseModalRemocao = this.onCloseModalRemocao.bind(this);
     this.onShowModalCriacao = this.onShowModalCriacao.bind(this);
+    this.onShowModalEdicao = this.onShowModalEdicao.bind(this);
     this.onShowModalRemocao = this.onShowModalRemocao.bind(this);
     this.onCreateTask = this.onCreateTask.bind(this);
+    this.onEditTask = this.onEditTask.bind(this);
     this.onFinishTask = this.onFinishTask.bind(this);
     this.onRemoveTask = this.onRemoveTask.bind(this);
     this.onReopenTask = this.onReopenTask.bind(this);
@@ -68,6 +73,14 @@ class App extends Component {
     });
   }
 
+  onCloseModalEdicao() {
+    this.setState({
+      carregando: undefined,
+      showModalEdicao: undefined,
+      taskSelected: undefined
+    });
+  }
+
   onCloseModalRemocao() {
     this.setState({
       carregando: undefined,
@@ -78,6 +91,13 @@ class App extends Component {
 
   onShowModalCriacao() {
     this.setState({showModalCriacao: true});
+  }
+
+  onShowModalEdicao(task) {
+    this.setState({
+      showModalEdicao: true,
+      taskSelected: task
+    });
   }
 
   onShowModalRemocao(task) {
@@ -94,6 +114,16 @@ class App extends Component {
       this.onSearch();
     }).catch(err => {
       this.onCloseModalCriacao();
+    });
+  }
+
+  onEditTask(dto) {
+    this.setState({carregando: true});
+    axios.put('http://localhost:5000/tarefa', dto).then(res => {
+      this.onCloseModalEdicao();
+      this.onSearch();
+    }).catch(err => {
+      this.onCloseModalEdicao();
     });
   }
 
@@ -135,7 +165,9 @@ class App extends Component {
         <FilterArea
           onSearch={this.onSearch}
           onCreate={this.onShowModalCriacao}/>
+
         <TaskTableArea tasks={this.state.tasks}
+          onEdit={this.onShowModalEdicao}
           onFinish={this.onFinishTask}
           onRemove={this.onShowModalRemocao}
           onReopen={this.onReopenTask} />
@@ -145,6 +177,13 @@ class App extends Component {
           show={this.state.showModalCriacao}
           onClose={this.onCloseModalCriacao}
           onSave={this.onCreateTask}/>
+
+        {/* Modal de edição */}
+        <EditTaskModal
+          show={this.state.showModalEdicao}
+          onClose={this.onCloseModalEdicao}
+          task={this.state.taskSelected}
+          onSave={this.onEditTask}/>
 
         {/* Modal de remoção */}
         <SimpleModal title="Excluir tarefa"
