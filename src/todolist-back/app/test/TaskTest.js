@@ -1,6 +1,6 @@
 const expect = require('chai').expect;
 const supertest = require('supertest');
-const api = supertest('http://localhost:5000');
+const api = supertest('https://diegowendel.com');
 const HTTP = require('../utils/HTTP');
 
 let task1 = {

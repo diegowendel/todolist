@@ -46,7 +46,7 @@ class App extends Component {
   onSearch(dto) {
     this.setState({carregando: true});
 
-    let query = 'http://localhost:5000/tarefa';
+    let query = 'https://diegowendel.com/tarefa';
     if (dto) {
       query += `?nome=${dto.nome}`;
       if (dto.tipo) {
@@ -117,7 +117,7 @@ class App extends Component {
 
   onCreateTask(dto) {
     this.setState({carregando: true});
-    axios.post('http://localhost:5000/tarefa', dto).then(res => {
+    axios.post('https://diegowendel.com/tarefa', dto).then(res => {
       this.onCloseModalCriacao();
       this.onSearch();
     }).catch(err => {
@@ -127,7 +127,7 @@ class App extends Component {
 
   onEditTask(dto) {
     this.setState({carregando: true});
-    axios.put('http://localhost:5000/tarefa', dto).then(res => {
+    axios.put('https://diegowendel.com/tarefa', dto).then(res => {
       this.onCloseModalEdicao();
       this.onSearch();
     }).catch(err => {
@@ -138,7 +138,7 @@ class App extends Component {
   onFinishTask(dto) {
     this.setState({carregando: true});
     dto.status = 'CONCLUIDA';
-    axios.put('http://localhost:5000/tarefa', dto).then(res => {
+    axios.put('https://diegowendel.com/tarefa', dto).then(res => {
       this.setState({carregando: undefined});
       this.onSearch();
     }).catch(err => {
@@ -148,7 +148,7 @@ class App extends Component {
 
   onRemoveTask() {
     this.setState({carregando: true});
-    axios.delete(`http://localhost:5000/tarefa/${this.state.taskSelected.id}`).then(res => {
+    axios.delete(`https://diegowendel.com/tarefa/${this.state.taskSelected.id}`).then(res => {
       this.onCloseModalRemocao();
       this.onSearch();
     }).catch(err => {
@@ -159,7 +159,7 @@ class App extends Component {
   onReopenTask(dto) {
     this.setState({carregando: true});
     dto.status = 'PENDENTE';
-    axios.put('http://localhost:5000/tarefa', dto).then(res => {
+    axios.put('https://diegowendel.com/tarefa', dto).then(res => {
       this.setState({carregando: undefined});
       this.onSearch();
     }).catch(err => {
