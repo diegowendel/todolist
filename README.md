@@ -13,6 +13,8 @@ Primeiro, é necessário instalar a última versão do **node** e do **npm**, po
 
 Em seguida, precisamos instalar o Docker para poder executar uma instância do MongoDB de maneira simples. [Tutorial de instalação no site oficial](https://docs.docker.com/install/).
 
+Por último, instalamos o gerenciador de pacotes **yarn**. O tutorial também está disponível na [página oficial da ferramenta](https://yarnpkg.com/en/docs/install#debian-stable).
+
 ## Executando a aplicação
 
 ### Instruções para o Backend
