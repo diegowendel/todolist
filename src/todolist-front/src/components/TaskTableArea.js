@@ -5,19 +5,20 @@ import { faCheck, faEdit, faExclamationCircle, faRedo, faTrash } from '@fortawes
 import ButtonWithTooltip from './ButtonWithTooltip';
 import Moment from 'moment';
 import TaskType from '../utils/TaskType';
+import TableColumnSorter from './TableColumnSorter';
 
 const TaskTableArea = (props) => {
   return (
     <div className="container">
       <div className="row">
         {props.tasks.length > 0 ?
-          <Table striped bordered hover>
+          <Table striped bordered hover responsive>
             <thead>
               <tr>
-                <th>Nome</th>
+                <th>Nome <TableColumnSorter sort={props.sortTasks} property="nome" /></th>
                 <th>Tipo</th>
-                <th>Data</th>
-                <th>Data de Criação</th>
+                <th>Data <TableColumnSorter sort={props.sortTasks} property="data" /></th>
+                <th>Data de Criação <TableColumnSorter sort={props.sortTasks} property="dataCriacao" /></th>
                 <th>Status</th>
                 <th width="16%">Ações</th>
               </tr>

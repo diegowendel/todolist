@@ -35,6 +35,7 @@ class App extends Component {
     this.onFinishTask = this.onFinishTask.bind(this);
     this.onRemoveTask = this.onRemoveTask.bind(this);
     this.onReopenTask = this.onReopenTask.bind(this);
+    this.sortTasks = this.sortTasks.bind(this);
   }
 
   componentDidMount() {
@@ -159,6 +160,23 @@ class App extends Component {
     });
   }
 
+  sortTasks(property, isAscendente) {
+    const ascendente = (a, b) => {
+      if (a[property] < b[property]) return -1;
+      if (a[property] > b[property]) return 1;
+      return 0;
+    }
+
+    const descendente = (a, b) => {
+      if (a[property] > b[property]) return -1;
+      if (a[property] < b[property]) return 1;
+      return 0;
+    }
+
+    let tasksSorted = this.state.tasks.sort(isAscendente ? ascendente : descendente);
+    this.setState({tasks: tasksSorted});
+  }
+
   render() {
     return (
       <div className="App painel-filtros">
@@ -170,7 +188,8 @@ class App extends Component {
           onEdit={this.onShowModalEdicao}
           onFinish={this.onFinishTask}
           onRemove={this.onShowModalRemocao}
-          onReopen={this.onReopenTask} />
+          onReopen={this.onReopenTask}
+          sortTasks={this.sortTasks} />
 
         {/* Modal de criação */}
         <CreateTaskModal
