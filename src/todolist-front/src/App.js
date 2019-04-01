@@ -187,6 +187,10 @@ class App extends Component {
   render() {
     return (
       <div className="App painel-filtros">
+        <header style={{marginTop: '20px', position: 'relative'}}>
+          <img className="main-image" src={`${process.env.PUBLIC_URL}/check.svg`} alt="todolist" /> <h1 className="main-text">Todolist app</h1>
+        </header>
+
         <FilterArea
           onSearch={this.onSearch}
           onCreate={this.onShowModalCriacao}/>
